@@ -14,31 +14,51 @@
 
 void init_window()
 {
+    InitWindow(1920, 1080, "Menu Indie Studio");
+    SetTargetFPS(60);
 }
 
 void destroy_window(Scene *game)
-{   
+{
+    UnloadSound(game->_home_scene->_play_button->_fx);
+    UnloadSound(game->_home_scene->_setting_button->_fx);
+    UnloadSound(game->_home_scene->_quit_button->_fx);
+    CloseAudioDevice();
+    CloseWindow();
+}
+
+void check_buttons(Scene *game)
+{
+    game->_home_scene->check_buttons();
+    game->_setting_scene->check_buttons();
+}
+
+void check_sound(Scene *game)
+{
+    game->_sound = game->_setting_scene->_sound;
+}
+
+void select_scene(Scene *game)
+{
+    game->select_scene();
+    if (game->_selector == 0) {
+        game->_home_scene->draw();
+    } else if (game->_selector == 1) {
+        game->_setting_scene->draw();
+    }
 }
 
 int main(void)
 {
-    Home_scene *home_scene = new Home_scene();
-    // Scene *game = new Scene();
-    // InitWindow(1920, 1080, "Menu Indie Studio");
-    // SetTargetFPS(60);
+    init_window();
+    Scene *game = new Scene();
 
-    // while (!WindowShouldClose())
-    // {
-    //     game->_home_scene->check_buttons();
-    //     BeginDrawing();
-    //         game->_home_scene->draw();
-    //         ClearBackground(RAYWHITE);
-    //     EndDrawing();
-    // }
-    // UnloadSound(game->_home_scene->_play_button->_fx);
-    // UnloadSound(game->_home_scene->_setting_button->_fx);
-    // UnloadSound(game->_home_scene->_quit_button->_fx);
-    // CloseAudioDevice();
-    // CloseWindow();
+    while (!WindowShouldClose())
+    {
+        check_buttons(game);
+        check_sound(game);
+        select_scene(game);
+    }
+    destroy_window(game);
     return (0);
 }

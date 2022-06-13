@@ -10,7 +10,7 @@
 
 #include <iostream>
 #include "./Home_scene.hpp"
-// #include "./Setting_scene.hpp"
+#include "./Setting_scene.hpp"
 
 class Scene
 {
@@ -19,24 +19,39 @@ class Scene
         ~Scene();
 
         Home_scene *_home_scene;
-        int _selector;
+        Setting_scene *_setting_scene;
 
-        // void set_scene_selector(int x);
+
+        int _selector;
+        bool _sound;
+
+        void select_scene();
+        void set_scene_selector(int x);
 };
 
 Scene::Scene()
 {
     this->_home_scene = new Home_scene();
-    // set_scene_selector(0);
+    this->_setting_scene = new Setting_scene();
+    set_scene_selector(0);
 }
 
 Scene::~Scene()
 {
 }
 
-// void Scene::set_scene_selector(int x)
-// {
-//     this->_selector = x;
-// }
+void Scene::select_scene()
+{
+    if (this->_selector == 0) {
+        this->_selector = this->_home_scene->_selector_scene;
+    } else if (this->_selector == 1) {
+        this->_selector = this->_setting_scene->_scene_selector;
+    }
+}
+
+void Scene::set_scene_selector(int x)
+{
+    this->_selector = x;
+}
 
 #endif /* !SCENE_HPP_ */

@@ -27,6 +27,8 @@ class Home_scene
         UIButton *_quit_button;
         UIView *_title;
 
+        int _selector_scene;
+
         void check_play_button();
         void check_setting_button();
         void check_quit_button();
@@ -104,6 +106,7 @@ void Home_scene::check_setting_button()
     }
     if (this->_setting_button->_action) {
         printf("setting button has pressed. 🛠\n");
+        this->_selector_scene = 1;
         PlaySound(this->_setting_button->_fx);
     }
 }
@@ -126,6 +129,8 @@ void Home_scene::check_quit_button()
     }
     if (this->_quit_button->_action) {
         printf("quit button has pressed. ❌\n");
+        CloseWindow();
+        exit(0);
         PlaySound(this->_quit_button->_fx);
     }
 }
@@ -159,8 +164,12 @@ void Home_scene::draw_textures()
 
 void Home_scene::draw()
 {
-    draw_textures();
-    draw_buttons();
+    this->_selector_scene = 0;
+    BeginDrawing();
+        ClearBackground(RAYWHITE);
+        draw_textures();
+        draw_buttons();
+    EndDrawing();
 }
 
 #endif /* !HOME_SCENE_HPP_ */

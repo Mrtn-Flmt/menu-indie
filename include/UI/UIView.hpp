@@ -13,21 +13,19 @@
 class UIView {
     public:
         UIView(const char* texture_file, Vector2 pos);
-        ~UIView();
+        ~UIView() = default;
 
-        Image _image;
         Texture2D _texture;
         Vector2 _pos;
 };
 
 UIView::UIView(const char* texture_file, Vector2 pos)
 {
-    this->_image = LoadImage(texture_file);
-        printf("🔥\n");
-        printf("%s🛠\n", texture_file);
-    this->_texture = LoadTextureFromImage(this->_image);
-        printf("✅\n");
+    printf("UIView start done.\n");
+    this->_texture = LoadTexture(texture_file);
+    printf("UIView LoadTexture done.\n");
     this->_pos = pos;
+    printf("UIView pos done.\n");
 }
 
 #endif /* !UIVIEW_HPP_ */
