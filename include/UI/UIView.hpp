@@ -23,7 +23,10 @@ class UIView {
 UIView::UIView(const char* texture_file, Vector2 pos)
 {
     this->_image = LoadImage(texture_file);
+        printf("🔥\n");
+        printf("%s🛠\n", texture_file);
     this->_texture = LoadTextureFromImage(this->_image);
+        printf("✅\n");
     this->_pos = pos;
 }
 

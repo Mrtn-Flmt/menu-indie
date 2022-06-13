@@ -10,6 +10,7 @@
 #include <stdlib.h>
 
 #include "./include/scene/Scene.hpp"
+#include "./include/scene/Home_scene.hpp"
 
 void init_window()
 {
@@ -21,8 +22,8 @@ void destroy_window(Scene *game)
 
 int main(void)
 {
-    Scene *game = new Scene();
-    printf("🔥\n");
+    Home_scene *home_scene = new Home_scene();
+    // Scene *game = new Scene();
     // InitWindow(1920, 1080, "Menu Indie Studio");
     // SetTargetFPS(60);
 

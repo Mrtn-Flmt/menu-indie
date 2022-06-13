@@ -19,7 +19,7 @@ class Scene
         ~Scene();
 
         Home_scene *_home_scene;
-        // int _selector;
+        int _selector;
 
         // void set_scene_selector(int x);
 };

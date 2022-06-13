@@ -43,17 +43,24 @@ Home_scene::Home_scene()
     this->_background = new UIView("assets/bg.png",
                         (Vector2){0, 0});
     this->_title = new UIView("assets/title.png",
-                            (Vector2){screenwidth/2 - 245, 100});
+                        (Vector2){screenwidth/2 - 245, 100});
     this->_play_button = new UIButton("assets/button.png",
-                            (Vector2){screenwidth/2 - 111, 400 });
+                        (Vector2){screenwidth/2 - 111, 400 });
     this->_setting_button = new UIButton("assets/button.png",
-                            (Vector2){ screenwidth/2 - 111, 600 });
+                        (Vector2){ screenwidth/2 - 111, 600 });
     this->_quit_button = new UIButton("assets/button.png",
-                            (Vector2){ screenwidth/2 - 111, 800 });
+                        (Vector2){ screenwidth/2 - 111, 800 });
 }
 
 Home_scene::~Home_scene()
 {
+}
+
+void Home_scene::check_buttons()
+{
+    check_play_button();
+    check_setting_button();
+    check_quit_button();
 }
 
 void Home_scene::check_play_button()
@@ -121,13 +128,6 @@ void Home_scene::check_quit_button()
         printf("quit button has pressed. ❌\n");
         PlaySound(this->_quit_button->_fx);
     }
-}
-
-void Home_scene::check_buttons()
-{
-    check_play_button();
-    check_setting_button();
-    check_quit_button();
 }
 
 void Home_scene::draw_buttons()
