@@ -10,7 +10,6 @@
 #include <stdlib.h>
 
 #include "./include/scene/Scene.hpp"
-#include "./include/scene/Home_scene.hpp"
 
 void init_window()
 {
@@ -36,29 +35,45 @@ void check_buttons(Scene *game)
 void check_sound(Scene *game)
 {
     game->_sound = game->_setting_scene->_sound;
+    if (game->_sound)
+        PlayMusicStream(game->_music);
+    else
+        StopMusicStream(game->_music);
 }
 
 void select_scene(Scene *game)
 {
     game->select_scene();
-    if (game->_selector == 0) {
+    if (game->_selector_scene == 0) {
         game->_home_scene->draw();
-    } else if (game->_selector == 1) {
+    } else if (game->_selector_scene == 1) {
         game->_setting_scene->draw();
     }
+}
+
+void run(Scene *game)
+{
+    check_buttons(game);
+    check_sound(game);
+    select_scene(game);
 }
 
 int main(void)
 {
     init_window();
+    InitAudioDevice();                                          // MUSIC
+
     Scene *game = new Scene();
 
-    while (!WindowShouldClose())
-    {
-        check_buttons(game);
-        check_sound(game);
-        select_scene(game);
+    PlayMusicStream(game->_music);                                     // MUSIC
+
+    while (!WindowShouldClose()) {
+        UpdateMusicStream(game->_music);                               // MUSIC
+        run(game);
     }
     destroy_window(game);
+
+    UnloadMusicStream(game->_music);                                   // MUSIC
+    CloseAudioDevice();                                         //MUSIC
     return (0);
 }

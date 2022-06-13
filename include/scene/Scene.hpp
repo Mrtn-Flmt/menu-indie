@@ -21,9 +21,10 @@ class Scene
         Home_scene *_home_scene;
         Setting_scene *_setting_scene;
 
-
-        int _selector;
+        // _selector_scene: if 0 = home else 1 = setting
+        int _selector_scene;
         bool _sound;
+        Music _music;
 
         void select_scene();
         void set_scene_selector(int x);
@@ -34,6 +35,8 @@ Scene::Scene()
     this->_home_scene = new Home_scene();
     this->_setting_scene = new Setting_scene();
     set_scene_selector(0);
+    this->_sound = true;
+    this->_music = LoadMusicStream("assets/Harry_firework.mp3");
 }
 
 Scene::~Scene()
@@ -42,16 +45,16 @@ Scene::~Scene()
 
 void Scene::select_scene()
 {
-    if (this->_selector == 0) {
-        this->_selector = this->_home_scene->_selector_scene;
-    } else if (this->_selector == 1) {
-        this->_selector = this->_setting_scene->_scene_selector;
+    if (this->_selector_scene == 0) {
+        this->_selector_scene = this->_home_scene->_selector_scene;
+    } else if (this->_selector_scene == 1) {
+        this->_selector_scene = this->_setting_scene->_scene_selector;
     }
 }
 
 void Scene::set_scene_selector(int x)
 {
-    this->_selector = x;
+    this->_selector_scene = x;
 }
 
 #endif /* !SCENE_HPP_ */
