@@ -14,7 +14,6 @@
 
 class Tuto_scene {
     public:
-
         Tuto_scene();
         ~Tuto_scene();
 

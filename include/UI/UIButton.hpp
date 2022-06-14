@@ -34,7 +34,7 @@ UIButton::UIButton(const char* texture_file, Vector2 pos)
                     (float)this->_texture.height };
     this->_source = { 0, 0, (float)this->_texture.width,
                 (float)this->_texture.height };
-    this->_fx = LoadSound("assets/buttonfx.wav");
+    this->_fx = LoadSound("assets/buttons_sound.wav");
     this->_state = 0;
     this->_action = false;
 }

@@ -159,7 +159,7 @@ void Home_scene::check_tuto_button()
     if (this->_tuto_button->_action) {
         printf("Tuto button has pressed. 🛰\n");
         this->_selector_scene = 2;
-        PlaySound(this->_tuto_button->_fx);
+        PlaySoundMulti(this->_tuto_button->_fx);
     }
 }
 

@@ -22,6 +22,7 @@ void destroy_window(Scene *game)
     UnloadSound(game->_home_scene->_play_button->_fx);
     UnloadSound(game->_home_scene->_setting_button->_fx);
     UnloadSound(game->_home_scene->_quit_button->_fx);
+    UnloadMusicStream(game->_music);
     CloseAudioDevice();
     CloseWindow();
 }
@@ -39,7 +40,7 @@ void check_sound(Scene *game)
     if (game->_sound)
         PlayMusicStream(game->_music);
     else
-        StopMusicStream(game->_music);
+        PauseMusicStream(game->_music);
 }
 
 void select_scene(Scene *game)
@@ -55,6 +56,7 @@ void select_scene(Scene *game)
 
 void run(Scene *game)
 {
+    UpdateMusicStream(game->_music);
     check_buttons(game);
     check_sound(game);
     select_scene(game);
@@ -62,16 +64,12 @@ void run(Scene *game)
 
 int main(void)
 {
-    InitAudioDevice();                                          // MUSIC
+    InitAudioDevice();
     init_window();
     Scene *game = new Scene();
-    PlayMusicStream(game->_music);                              // MUSIC
-    while (!WindowShouldClose()) {
-        UpdateMusicStream(game->_music);                        // MUSIC
+    PlayMusicStream(game->_music);
+    while (!WindowShouldClose())
         run(game);
-    }
     destroy_window(game);
-    UnloadMusicStream(game->_music);                            // MUSIC
-    CloseAudioDevice();                                         //MUSIC
     return (0);
 }
