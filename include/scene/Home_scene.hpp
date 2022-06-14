@@ -25,6 +25,7 @@ class Home_scene
         UIButton *_play_button;
         UIButton *_setting_button;
         UIButton *_quit_button;
+        UIButton *_tuto_button;
         UIView *_title;
 
         int _selector_scene;
@@ -32,6 +33,7 @@ class Home_scene
         void check_play_button();
         void check_setting_button();
         void check_quit_button();
+        void check_tuto_button();
         void check_buttons();
 
         void draw_textures();
@@ -49,9 +51,11 @@ Home_scene::Home_scene()
     this->_play_button = new UIButton("assets/button.png",
                         (Vector2){screenwidth/2 - 111, 400 });
     this->_setting_button = new UIButton("assets/button.png",
-                        (Vector2){ screenwidth/2 - 111, 600 });
+                        (Vector2){ screenwidth/2 - 111, 550 });
     this->_quit_button = new UIButton("assets/button.png",
-                        (Vector2){ screenwidth/2 - 111, 800 });
+                        (Vector2){ screenwidth/2 - 111, 700 });
+    this->_tuto_button = new UIButton("assets/button.png",
+                        (Vector2){screenwidth/2 - 111, 850});
 }
 
 Home_scene::~Home_scene()
@@ -63,6 +67,7 @@ void Home_scene::check_buttons()
     check_play_button();
     check_setting_button();
     check_quit_button();
+    check_tuto_button();
 }
 
 void Home_scene::check_play_button()
@@ -135,6 +140,29 @@ void Home_scene::check_quit_button()
     }
 }
 
+void Home_scene::check_tuto_button()
+{
+    Vector2 mouse_pos = GetMousePosition();
+    this->_tuto_button->_action = false;
+    if (CheckCollisionPointRec(mouse_pos, this->_tuto_button->_bounds)) {
+        this->_tuto_button->change_texture("assets/button_over.png");
+        if (IsMouseButtonDown(MOUSE_BUTTON_LEFT))
+            this->_tuto_button->_state = 2;
+        else 
+            this->_tuto_button->_state = 1;
+        if (IsMouseButtonReleased(MOUSE_BUTTON_LEFT))
+            this->_tuto_button->_action = true;
+    } else {
+        this->_tuto_button->change_texture("assets/button.png");
+        this->_tuto_button->_state = 0;
+    }
+    if (this->_tuto_button->_action) {
+        printf("Tuto button has pressed. 🛰\n");
+        this->_selector_scene = 2;
+        PlaySound(this->_tuto_button->_fx);
+    }
+}
+
 void Home_scene::draw_buttons()
 {
     DrawTextureRec(this->_play_button->_texture, this->_play_button->_source,
@@ -153,6 +181,11 @@ void Home_scene::draw_buttons()
     (Vector2){ this->_quit_button->_bounds.x, this->_quit_button->_bounds.y }, WHITE);
     DrawText("Quitter", 910,
             this->_quit_button->_bounds.y + this->_quit_button->_texture.height/2 - 13,
+            30, WHITE);
+    DrawTextureRec(this->_tuto_button->_texture, this->_tuto_button->_source,
+    (Vector2){ this->_tuto_button->_bounds.x, this->_tuto_button->_bounds.y }, WHITE);
+    DrawText("Tuto", this->_tuto_button->_bounds.x + 20,
+            this->_tuto_button->_bounds.y + 20,
             30, WHITE);
 }
 

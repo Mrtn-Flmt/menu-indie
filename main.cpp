@@ -14,7 +14,7 @@
 void init_window()
 {
     InitWindow(1920, 1080, "Menu Indie Studio");
-    SetTargetFPS(60);
+    SetTargetFPS(30);
 }
 
 void destroy_window(Scene *game)
@@ -30,6 +30,7 @@ void check_buttons(Scene *game)
 {
     game->_home_scene->check_buttons();
     game->_setting_scene->check_buttons();
+    game->_tuto_scene->check_back_button();
 }
 
 void check_sound(Scene *game)
@@ -44,11 +45,12 @@ void check_sound(Scene *game)
 void select_scene(Scene *game)
 {
     game->select_scene();
-    if (game->_selector_scene == 0) {
+    if (game->_selector_scene == 0)
         game->_home_scene->draw();
-    } else if (game->_selector_scene == 1) {
+    else if (game->_selector_scene == 1)
         game->_setting_scene->draw();
-    }
+    else if (game->_selector_scene == 2)
+        game->_tuto_scene->draw();
 }
 
 void run(Scene *game)
@@ -60,20 +62,16 @@ void run(Scene *game)
 
 int main(void)
 {
-    init_window();
     InitAudioDevice();                                          // MUSIC
-
+    init_window();
     Scene *game = new Scene();
-
-    PlayMusicStream(game->_music);                                     // MUSIC
-
+    PlayMusicStream(game->_music);                              // MUSIC
     while (!WindowShouldClose()) {
-        UpdateMusicStream(game->_music);                               // MUSIC
+        UpdateMusicStream(game->_music);                        // MUSIC
         run(game);
     }
     destroy_window(game);
-
-    UnloadMusicStream(game->_music);                                   // MUSIC
+    UnloadMusicStream(game->_music);                            // MUSIC
     CloseAudioDevice();                                         //MUSIC
     return (0);
 }

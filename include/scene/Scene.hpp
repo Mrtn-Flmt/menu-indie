@@ -11,6 +11,7 @@
 #include <iostream>
 #include "./Home_scene.hpp"
 #include "./Setting_scene.hpp"
+#include "./Tuto_scene.hpp"
 
 class Scene
 {
@@ -20,8 +21,8 @@ class Scene
 
         Home_scene *_home_scene;
         Setting_scene *_setting_scene;
+        Tuto_scene *_tuto_scene;
 
-        // _selector_scene: if 0 = home else 1 = setting
         int _selector_scene;
         bool _sound;
         Music _music;
@@ -34,6 +35,7 @@ Scene::Scene()
 {
     this->_home_scene = new Home_scene();
     this->_setting_scene = new Setting_scene();
+    this->_tuto_scene = new Tuto_scene();
     set_scene_selector(0);
     this->_sound = true;
     this->_music = LoadMusicStream("assets/Harry_firework.mp3");
@@ -49,6 +51,8 @@ void Scene::select_scene()
         this->_selector_scene = this->_home_scene->_selector_scene;
     } else if (this->_selector_scene == 1) {
         this->_selector_scene = this->_setting_scene->_scene_selector;
+    } else if (this->_selector_scene == 2) {
+        this->_selector_scene = this->_tuto_scene->_scene_selector;
     }
 }
 
